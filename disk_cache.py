@@ -5,6 +5,7 @@ import urllib.parse
 import re
 from datetime import datetime,timedelta
 import shutil
+from link_crawler import link_crawler
 
 class DiskCache:
     """
@@ -95,7 +96,7 @@ class DiskCache:
         # replace invalid characters
         filename = re.sub('[^/0-9a-zA-Z\-,.;_]','_',filename)
         # restrict maximum number of characters
-        filename - '/'.join(segment[:255] for segment in filename.split('/'))
+        filename = '/'.join(segment[:255] for segment in filename.split('/'))
         return os.path.join(self.cache_dir,filename)
 
     def has_expired(self,timestamp):
@@ -109,5 +110,5 @@ class DiskCache:
         if os.path.exists(self.cache_dir):
             shutil.rmtree(self.cache_dir)
 
-if __name__ == '__main__'
-    link_crawer('http://example.webscraping.com/', '/(index|view)', cache=DiskCache())
+if __name__ == '__main__':
+    link_crawler('http://example.webscraping.com/', '/(index|view)', cache=DiskCache())
